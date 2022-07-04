@@ -1,0 +1,39 @@
+name: kraken_pokedex
+description: A new Flutter project.
+
+# Prevent accidental publishing to pub.dev.
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.3 <3.0.0"
+
+dependencies:
+  chopper: ^4.0.5
+  flutter:
+    sdk: flutter
+
+  # bloc  
+  flutter_bloc: ^8.0.1
+  equatable: ^2.0.3
+
+  # authentication
+  firebase_core: ^1.19.1
+  firebase_auth: ^3.4.1
+  google_sign_in: ^5.3.3
+  email_validator: ^2.0.1
+  flutter_facebook_auth: ^4.3.4+2
+
+dev_dependencies:
+  chopper_generator: ^4.0.5
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^3.0.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/authentication/
+    - assets/images/pokemon/

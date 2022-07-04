@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "790517606090",
+    "project_id": "kraken-pokedex-7553d",
+    "storage_bucket": "kraken-pokedex-7553d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:790517606090:android:342b8da5942f4383daf633",
+        "android_client_info": {
+          "package_name": "com.example.kraken_pokedex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "790517606090-6m2vfjfht5jon9mga96157cglroqqc4a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kraken_pokedex",
+            "certificate_hash": "c92ecefca2a3c538f14b4614ed99c11d70fa64f2"
+          }
+        },
+        {
+          "client_id": "790517606090-ahluecou19k1t5uq9dpsv654lft0fi4a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFd7Pf9ZaCqDVneN8UVoX_4_avbJUu4rU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "790517606090-ahluecou19k1t5uq9dpsv654lft0fi4a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
