@@ -5,14 +5,16 @@ abstract class PokemonListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class PokemonPageRequest extends PokemonListEvent {
-  final int page;
+class PokemonLoadStarted extends PokemonListEvent {
+  final bool loadAll;
 
-  PokemonPageRequest({required this.page});
+  PokemonLoadStarted({this.loadAll = false});
 }
 
-class PokemonFetched extends PokemonListEvent {
-  final String pokemon;
+class PokemonLoadMoreStarted extends PokemonListEvent {}
 
-  PokemonFetched({required this.pokemon});
+class PokemonFetched extends PokemonListEvent {
+  final String pokemonId;
+
+  PokemonFetched({required this.pokemonId});
 }

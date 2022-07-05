@@ -1,70 +1,121 @@
-import 'package:kraken_pokedex/src/features/pokemon/domain/entities/pokemon_entity.dart';
-import 'package:kraken_pokedex/src/features/pokemon/domain/entities/pokemon_moves_entity.dart';
-import 'package:kraken_pokedex/src/features/pokemon/domain/entities/pokemon_stats_entity.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'pokemon_model.g.dart';
 
-class PokemonModel extends PokemonEntity {
+@JsonSerializable()
+class PokemonModel {
   PokemonModel(
-      {required int weight,
-      required int height,
-      required int id,
-      required String name,
-      required String sprite,
-      required String url,
-      required String specie,
-      required List<PokemonMoveEntity> moves,
-      required List<PokemonStatsEntity> status,
-      required List<String> types})
-      : super(
-            weight: weight,
-            height: height,
-            id: id,
-            name: name,
-            sprite: sprite,
-            url: url,
-            specie: specie,
-            moves: moves,
-            status: status,
-            types: types);
+    this.name,
+    this.id,
+    this.imageUrl,
+    this.xDescription,
+    this.yDescription,
+    this.height,
+    this.category,
+    this.weight,
+    this.types,
+    this.weaknesses,
+    this.evolutions,
+    this.abilities,
+    this.hp,
+    this.attack,
+    this.defense,
+    this.specialAttack,
+    this.specialDefense,
+    this.speed,
+    this.total,
+    this.genderMalePercentage,
+    this.genderFemalePercentage,
+    this.genderless,
+    this.cycles,
+    this.eggGroups,
+    this.evolvedFrom,
+    this.reason,
+    this.baseExp,
+  );
 
-  factory PokemonModel.fromJson(Map<String, dynamic> json) {
-    List<PokemonMoveEntity> movesAux = [];
-    List<PokemonStatsEntity> statusAux = [];
-    List<String> typesAux = [];
+  factory PokemonModel.fromJson(Map<String, dynamic> json) =>
+      _$PokemonModelFromJson(json);
 
-    if (json['moves'].length == 0) {
-      movesAux.add(PokemonMoveEntity(name: "have no move", url: "null"));
-      movesAux.add(PokemonMoveEntity(name: "have no move", url: "null"));
-    } else {
-      json['moves'].forEach((m) {
-        movesAux.add(
-            PokemonMoveEntity(name: m['move']['name'], url: m['move']['url']));
-      });
-    }
+  Map<String, dynamic> toJson() => _$PokemonModelToJson(this);
 
-    json['stats'].forEach((s) {
-      statusAux.add(
-        PokemonStatsEntity(name: s['stat']['name'], value: s['base_stat']),
-      );
-    });
+  @JsonKey(required: true, disallowNullValue: true)
+  final String name;
 
-    json['types'].forEach((t) {
-      typesAux.add(t['type']['name']);
-    });
+  @JsonKey(required: true, disallowNullValue: true)
+  final String id;
 
-    return PokemonModel(
-      id: json['id'],
-      weight: json['weight'],
-      height: json['height'],
-      name: json['name'] ?? '',
-      url: "https://pokeapi.co/api/v2/pokemon/${json['id']}",
-      moves: movesAux,
-      status: statusAux,
-      types: typesAux,
-      sprite: json['sprites']['other']['official-artwork']['front_default'] ??
-          json['sprites']['front_default'] ??
-          json['sprites']['versions']['generation-viii']['icons']
-              ['front_default'],
-      specie: json['species']['url'],
-    );
-  }
+  @JsonKey(required: true, name: 'imageurl', disallowNullValue: true)
+  final String imageUrl;
+
+  @JsonKey(name: 'xdescription', defaultValue: '')
+  final String xDescription;
+
+  @JsonKey(name: 'ydescription', defaultValue: '')
+  final String yDescription;
+
+  @JsonKey(defaultValue: '')
+  final String height;
+
+  @JsonKey(defaultValue: '')
+  final String category;
+
+  @JsonKey(defaultValue: '')
+  final String weight;
+
+  @JsonKey(name: 'typeofpokemon', required: true, disallowNullValue: true)
+  final List<String> types;
+
+  @JsonKey(defaultValue: [])
+  final List<String> weaknesses;
+
+  @JsonKey(defaultValue: [])
+  final List<String> evolutions;
+
+  @JsonKey(defaultValue: [])
+  final List<String> abilities;
+
+  @JsonKey(defaultValue: 0)
+  final num hp;
+
+  @JsonKey(defaultValue: 0)
+  final num attack;
+
+  @JsonKey(defaultValue: 0)
+  final num defense;
+
+  @JsonKey(name: 'special_attack', defaultValue: 0)
+  final num specialAttack;
+
+  @JsonKey(name: 'special_defense', defaultValue: 0)
+  final num specialDefense;
+
+  @JsonKey(defaultValue: 0)
+  final num speed;
+
+  @JsonKey(defaultValue: 0)
+  final num total;
+
+  @JsonKey(name: 'male_percentage')
+  final String? genderMalePercentage;
+
+  @JsonKey(name: 'female_percentage')
+  final String? genderFemalePercentage;
+
+  @JsonKey(required: true, disallowNullValue: true)
+  final num genderless;
+
+  @JsonKey()
+  final String? cycles;
+
+  @JsonKey(name: 'egg_groups')
+  final String? eggGroups;
+
+  @JsonKey(name: 'evolvedfrom')
+  final String? evolvedFrom;
+
+  @JsonKey()
+  final String? reason;
+
+  @JsonKey(name: 'base_exp', defaultValue: '0')
+  final String baseExp;
 }
