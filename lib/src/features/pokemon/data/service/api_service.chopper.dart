@@ -18,7 +18,7 @@ class _$ApiService extends ApiService {
 
   @override
   Future<Response<dynamic>> getPosts() {
-    final $url = '/posts';
+    final $url = '/pokemon';
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }

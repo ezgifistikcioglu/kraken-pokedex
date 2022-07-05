@@ -1,4 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:kraken_pokedex/src/features/pokemon/domain/entities/pokemon_ability_entity.dart';
+import 'package:kraken_pokedex/src/features/pokemon/domain/entities/pokemon_moves_entity.dart';
+import 'package:kraken_pokedex/src/features/pokemon/domain/entities/pokemon_stats_entity.dart';
+import 'package:kraken_pokedex/src/features/pokemon/domain/entities/pokemon_types_entity.dart';
 part 'pokemon_model.g.dart';
 
 @JsonSerializable()
@@ -6,31 +10,11 @@ class PokemonModel {
   PokemonModel(
     this.name,
     this.id,
-    this.imageUrl,
-    this.xDescription,
-    this.yDescription,
-    this.height,
-    this.category,
-    this.weight,
+    this.url,
     this.types,
-    this.weaknesses,
-    this.evolutions,
     this.abilities,
-    this.hp,
-    this.attack,
-    this.defense,
-    this.specialAttack,
-    this.specialDefense,
-    this.speed,
-    this.total,
-    this.genderMalePercentage,
-    this.genderFemalePercentage,
-    this.genderless,
-    this.cycles,
-    this.eggGroups,
-    this.evolvedFrom,
-    this.reason,
-    this.baseExp,
+    this.moves,
+    this.stats,
   );
 
   factory PokemonModel.fromJson(Map<String, dynamic> json) =>
@@ -39,83 +23,23 @@ class PokemonModel {
   Map<String, dynamic> toJson() => _$PokemonModelToJson(this);
 
   @JsonKey(required: true, disallowNullValue: true)
-  final String name;
+  final String? name;
 
   @JsonKey(required: true, disallowNullValue: true)
-  final String id;
-
-  @JsonKey(required: true, name: 'imageurl', disallowNullValue: true)
-  final String imageUrl;
-
-  @JsonKey(name: 'xdescription', defaultValue: '')
-  final String xDescription;
-
-  @JsonKey(name: 'ydescription', defaultValue: '')
-  final String yDescription;
-
-  @JsonKey(defaultValue: '')
-  final String height;
-
-  @JsonKey(defaultValue: '')
-  final String category;
-
-  @JsonKey(defaultValue: '')
-  final String weight;
-
-  @JsonKey(name: 'typeofpokemon', required: true, disallowNullValue: true)
-  final List<String> types;
-
-  @JsonKey(defaultValue: [])
-  final List<String> weaknesses;
-
-  @JsonKey(defaultValue: [])
-  final List<String> evolutions;
-
-  @JsonKey(defaultValue: [])
-  final List<String> abilities;
-
-  @JsonKey(defaultValue: 0)
-  final num hp;
-
-  @JsonKey(defaultValue: 0)
-  final num attack;
-
-  @JsonKey(defaultValue: 0)
-  final num defense;
-
-  @JsonKey(name: 'special_attack', defaultValue: 0)
-  final num specialAttack;
-
-  @JsonKey(name: 'special_defense', defaultValue: 0)
-  final num specialDefense;
-
-  @JsonKey(defaultValue: 0)
-  final num speed;
-
-  @JsonKey(defaultValue: 0)
-  final num total;
-
-  @JsonKey(name: 'male_percentage')
-  final String? genderMalePercentage;
-
-  @JsonKey(name: 'female_percentage')
-  final String? genderFemalePercentage;
-
-  @JsonKey(required: true, disallowNullValue: true)
-  final num genderless;
+  final String? id;
 
   @JsonKey()
-  final String? cycles;
-
-  @JsonKey(name: 'egg_groups')
-  final String? eggGroups;
-
-  @JsonKey(name: 'evolvedfrom')
-  final String? evolvedFrom;
+  final String url;
 
   @JsonKey()
-  final String? reason;
+  final List<Types>? types;
 
-  @JsonKey(name: 'base_exp', defaultValue: '0')
-  final String baseExp;
+  @JsonKey(defaultValue: [])
+  final List<Ability>? abilities;
+
+  @JsonKey(defaultValue: [])
+  final List<Moves>? moves;
+
+  @JsonKey(defaultValue: [])
+  final List<Stats>? stats;
 }

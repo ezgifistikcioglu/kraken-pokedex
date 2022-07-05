@@ -1,11 +1,13 @@
-import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
-import 'package:chopper/chopper.dart' as Chopper;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kraken_pokedex/src/core/constants/app_constants.dart';
 import 'package:kraken_pokedex/src/features/pokemon/data/service/api_service.dart';
 import 'package:kraken_pokedex/src/features/pokemon/domain/models/pokemon_model.dart';
+import 'package:kraken_pokedex/src/features/pokemon/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
 
 class PokemonListViewScreen extends StatefulWidget {
-  const PokemonListViewScreen({super.key});
+  const PokemonListViewScreen({super.key, required this.title});
+  final String title;
 
   @override
   State<PokemonListViewScreen> createState() => _PokemonListViewScreenState();
@@ -22,69 +24,65 @@ class _PokemonListViewScreenState extends State<PokemonListViewScreen> {
     super.initState();
   }
 
-  void _getPostsAndReloadScreen() async {
-    this.postList = await getPosts();
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("widget.title"),
-      ),
-      body: buildPostList(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _getPostsAndReloadScreen,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    return BlocProvider(
+      create: (BuildContext context) =>
+          PokemonListBloc()..add(PokemonFetched()),
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text(widget.title),
+          ),
+          body: BlocBuilder<PokemonListBloc, PokemonListState>(
+            builder: (context, state) {
+              if (state is PokemonLoadingState) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (state is PokemonErrorState) {
+                return Center(
+                  child: Text(
+                    state.errorMessage,
+                  ),
+                );
+              }
+              if (state is PokemonSuccessState) {
+                return Padding(
+                  padding: ApplicationConstants.normal2xPadding,
+                  child: _contentGridView(state),
+                );
+              }
+              return Container();
+            },
+          ) // This trailing comma makes auto-formatting nicer for build methods.
+          ),
     );
   }
 
-  // 1
-  Future<List<PokemonModel>> getPosts() async {
-    // 2
-    final postResponse = await service.getPosts();
-
-    // 3
-    if (postResponse.isSuccessful) {
-      // 4
-      final postObjectList = postResponse.body as List;
-      // 5
-      final posts = postObjectList
-          .map((singleJsonObject) => PokemonModel.fromJson(singleJsonObject))
-          .toList();
-      return posts;
-    } else {
-      // 6
-      return <PokemonModel>[];
-    }
-  }
-
-  Widget buildPostList() {
-    if (this.postList.isEmpty) {
-      return Container(
-        child: Center(
-          child: Text("no items in list"),
-        ),
-      );
-    } else {
-      return Container(
-        child: ListView.builder(
-            itemCount: postList.length,
-            itemBuilder: (BuildContext ctxt, int index) {
-              return Card(
-                child: ListTile(
-                  leading: FlutterLogo(size: 72.0),
-                  title: Text(postList[index].name),
-                  subtitle: Text(postList[index].xDescription),
-                  trailing: Icon(Icons.more_vert),
-                  isThreeLine: true,
-                ),
-              );
-            }),
-      );
-    }
+  GridView _contentGridView(PokemonSuccessState state) {
+    return GridView.builder(
+      scrollDirection: Axis.vertical,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 1.0,
+        mainAxisSpacing: 1.0,
+      ),
+      itemCount: state.pokemonList?.length,
+      itemBuilder: (context, index) {
+        return Card(
+          child: GridTile(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.network(state.pokemonList?[index].url ??
+                    'https://flutterawesome.com/assets/favicon.png'),
+                Text(state.pokemonList?[index].name ?? 'of')
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

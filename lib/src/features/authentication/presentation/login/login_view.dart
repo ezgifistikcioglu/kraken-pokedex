@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kraken_pokedex/src/core/constants/app_constants.dart';
 import 'package:kraken_pokedex/src/core/extensions/image_path_extension.dart';
-import 'package:kraken_pokedex/src/features/authentication/presentation/cubit/auth_bloc.dart';
+import 'package:kraken_pokedex/src/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:kraken_pokedex/src/features/authentication/presentation/login/home/home_view.dart';
 import 'package:kraken_pokedex/src/features/authentication/presentation/login/login_view_model.dart';
 import 'package:kraken_pokedex/src/features/authentication/presentation/login/sign_up/sign_up.dart';
@@ -26,14 +26,12 @@ class _LoginViewState extends LoginViewModel {
       body: BlocListener<AuthBloc, AuthenticationState>(
         listener: (context, state) {
           if (state is Authenticated) {
-            // Navigating to the dashboard screen if the user is authenticated
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const HomeView()),
             );
           }
           if (state is AuthenticationError) {
-            // Showing error message if the user has entered invalid credentials
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.error)));
           }
@@ -41,13 +39,11 @@ class _LoginViewState extends LoginViewModel {
         child: BlocBuilder<AuthBloc, AuthenticationState>(
           builder: (context, state) {
             if (state is Loading) {
-              // Showing the loading indicator while the user is signing in
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
             if (state is UnAuthenticated) {
-              // Showing the sign in form if the user is not authenticated
               return Center(
                 child: Padding(
                   padding: ApplicationConstants.normal2xPadding,

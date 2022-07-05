@@ -1,21 +1,16 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:kraken_pokedex/src/features/pokemon/domain/entities/pokemon_entity.dart';
+import 'package:flutter/foundation.dart';
 import 'package:kraken_pokedex/src/features/pokemon/domain/models/pokemon_model.dart';
+import 'package:kraken_pokedex/src/features/pokemon/domain/models/pokemon_response.dart';
 
 abstract class IPokemonService {
   IPokemonService(this.dio);
   final Dio dio;
 
-  Future<PokemonEntity?> fetchPokemonData({required String pokemon});
-
-  Future<List<PokemonEntity>> getAllPokemons();
-
-  Future<List<PokemonEntity>> getPokemons(
-      {required int limit, required int page});
-
-  Future<PokemonEntity?> getPokemon(String number);
+  Future<PokemonModel?> fetchPokemonData();
 }
 
 enum _PokemonPaths { pokemon, ability, type }
@@ -24,87 +19,54 @@ class PokemonService extends IPokemonService {
   PokemonService(super.dio);
 
   @override
-  Future<PokemonEntity?> fetchPokemonData({required String pokemon}) async {
+  Future<PokemonModel?> fetchPokemonData() async {
     final response = await dio.get(
       '/${_PokemonPaths.pokemon.name}',
     ); //"https://pokeapi.co/api/v2/pokemon/$pokemon"
     if (response.statusCode == HttpStatus.ok) {
       final jsonBody = response.data;
       if (jsonBody is Map<String, dynamic>) {
-        // return PokemonModel.fromJson(jsonBody);
+        return PokemonModel.fromJson(jsonBody);
       }
     }
     return null;
   }
 
-  @override
-  Future<List<PokemonEntity>> getAllPokemons() {
-    // TODO: implement getAllPokemons
-    throw UnimplementedError();
+  Future<List<PokemonModel>?> fetchPokemonList() async {
+    final resp = await dio.get('/${_PokemonPaths.ability.name}');
+    final jsonBody = resp.data;
+    if (resp.statusCode == HttpStatus.ok) {
+      if (jsonBody is Map<String, dynamic>) {
+        return PokemonResponse.fromJson(jsonBody).data;
+      }
+    } else {
+      throw Exception('Failed to load pokemon list');
+    }
+    return null;
   }
 
-  @override
-  Future<PokemonEntity?> getPokemon(String number) {
-    // TODO: implement getPokemon
-    throw UnimplementedError();
-  }
+  Future<List<PokemonModel>?> fetchPostItemsAdvance() async {
+    try {
+      final response = await dio.get('/${_PokemonPaths.ability.name}');
+      if (response.statusCode == HttpStatus.ok) {
+        final _myDatas = response.data;
 
-  @override
-  Future<List<PokemonEntity>> getPokemons(
-      {required int limit, required int page}) {
-    // TODO: implement getPokemons
-    throw UnimplementedError();
+        if (_myDatas is List) {
+          return _myDatas.map((e) => PokemonModel.fromJson(e)).toList();
+        }
+      }
+    } on DioError catch (exception) {
+      _ShowDebug.showDioError(exception, this);
+    }
+    return null;
   }
+}
 
-  // @override
-  // Future<List<PokemonEntity>> getAllPokemons() async {
-  //   final hasCachedData = await localDataSource.hasData();
-//
-  //   if (!hasCachedData) {
-  //     final pokemonGithubModels = await githubDataSource.getPokemons();
-  //     final pokemonHiveModels = pokemonGithubModels.map((e) => e.toHiveModel());
-//
-  //     await localDataSource.savePokemons(pokemonHiveModels);
-  //   }
-//
-  //   final pokemonHiveModels = await localDataSource.getAllPokemons();
-//
-  //   final pokemonEntities = pokemonHiveModels.map((e) => e.toEntity()).toList();
-//
-  //   return pokemonEntities;
-  // }
-//
-  // @override
-  // Future<List<PokemonEntity>> getPokemons({required int limit, required int page}) async {
-  //   final hasCachedData = await localDataSource.hasData();
-//
-  //   if (!hasCachedData) {
-  //     final pokemonGithubModels = await githubDataSource.getPokemons();
-  //     final pokemonHiveModels = pokemonGithubModels.map((e) => e.toHiveModel());
-//
-  //     await localDataSource.savePokemons(pokemonHiveModels);
-  //   }
-//
-  //   final pokemonHiveModels = await localDataSource.getPokemons(
-  //     page: page,
-  //     limit: limit,
-  //   );
-  //   final pokemonEntities = pokemonHiveModels.map((e) => e.toEntity()).toList();
-//
-  //   return pokemonEntities;
-  // }
-//
-  // @override
-  // Future<PokemonEntity?> getPokemon(String number) async {
-  //   final pokemonModel = await localDataSource.getPokemon(number);
-//
-  //   if (pokemonModel == null) return null;
-//
-  //   // get all evolutions
-  //   final evolutions = await localDataSource.getEvolutions(pokemonModel);
-//
-  //   final pokemon = pokemonModel.toEntity(evolutions: evolutions);
-//
-  //   return pokemon;
-  // }
+class _ShowDebug {
+  static void showDioError<T>(DioError error, T type) {
+    if (kDebugMode) {
+      print(error.message);
+      print(type);
+    }
+  }
 }

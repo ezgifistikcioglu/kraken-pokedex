@@ -10,8 +10,10 @@ enum PokemonStateStatus {
   loadMoreFailure,
 }
 
-class PokemonListState extends Equatable {
-  const PokemonListState._({
+abstract class PokemonListState {}
+
+class PokemonListStatee extends Equatable {
+  const PokemonListStatee._({
     this.status = PokemonStateStatus.initial,
     this.pokemons = const [],
     this.selectedPokemonIndex = 0,
@@ -20,23 +22,23 @@ class PokemonListState extends Equatable {
     this.error,
   });
 
-  const PokemonListState.initial() : this._();
+  //const PokemonListState.initial() : this._();
   final PokemonStateStatus status;
-  final List<PokemonEntity> pokemons;
+  final List<PokemonModel> pokemons;
   final int selectedPokemonIndex;
   final int page;
   final Exception? error;
   final bool canLoadMore;
 
-  PokemonEntity get selectedPokemon => pokemons[selectedPokemonIndex];
+  PokemonModel get selectedPokemon => pokemons[selectedPokemonIndex];
 
-  PokemonListState asLoading() {
+  PokemonListStatee asLoading() {
     return copyWith(
       status: PokemonStateStatus.loading,
     );
   }
 
-  PokemonListState asLoadSuccess(List<PokemonEntity> pokemons,
+  PokemonListStatee asLoadSuccess(List<PokemonModel> pokemons,
       {bool canLoadMore = true}) {
     return copyWith(
       status: PokemonStateStatus.loadSuccess,
@@ -46,18 +48,18 @@ class PokemonListState extends Equatable {
     );
   }
 
-  PokemonListState asLoadFailure(Exception e) {
+  PokemonListStatee asLoadFailure(Exception e) {
     return copyWith(
       status: PokemonStateStatus.loadFailure,
       error: e,
     );
   }
 
-  PokemonListState asLoadingMore() {
+  PokemonListStatee asLoadingMore() {
     return copyWith(status: PokemonStateStatus.loadingMore);
   }
 
-  PokemonListState asLoadMoreSuccess(List<PokemonEntity> newPokemons,
+  PokemonListStatee asLoadMoreSuccess(List<PokemonModel> newPokemons,
       {bool canLoadMore = true}) {
     return copyWith(
       status: PokemonStateStatus.loadMoreSuccess,
@@ -67,22 +69,22 @@ class PokemonListState extends Equatable {
     );
   }
 
-  PokemonListState asLoadMoreFailure(Exception e) {
+  PokemonListStatee asLoadMoreFailure(Exception e) {
     return copyWith(
       status: PokemonStateStatus.loadMoreFailure,
       error: e,
     );
   }
 
-  PokemonListState copyWith({
+  PokemonListStatee copyWith({
     PokemonStateStatus? status,
-    List<PokemonEntity>? pokemons,
+    List<PokemonModel>? pokemons,
     int? selectedPokemonIndex,
     int? page,
     bool? canLoadMore,
     Exception? error,
   }) {
-    return PokemonListState._(
+    return PokemonListStatee._(
       status: status ?? this.status,
       pokemons: pokemons ?? this.pokemons,
       selectedPokemonIndex: selectedPokemonIndex ?? this.selectedPokemonIndex,
@@ -94,4 +96,23 @@ class PokemonListState extends Equatable {
 
   @override
   List<Object?> get props => [];
+}
+
+class PokemonInitialState extends PokemonListState {}
+
+class PokemonLoadingState extends PokemonListState {}
+
+class PokemonSuccessState extends PokemonListState {
+  final List<PokemonModel>? pokemonList;
+  PokemonSuccessState({required this.pokemonList});
+}
+
+class PokemonSuccessState2 extends PokemonListState {
+  final PokemonModel? pokemonList;
+  PokemonSuccessState2({required this.pokemonList});
+}
+
+class PokemonErrorState extends PokemonListState {
+  final String errorMessage;
+  PokemonErrorState({required this.errorMessage});
 }

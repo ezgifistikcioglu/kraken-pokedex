@@ -1,6 +1,7 @@
 part of 'pokemon_list_bloc.dart';
 
 abstract class PokemonListEvent extends Equatable {
+  const PokemonListEvent();
   @override
   List<Object> get props => [];
 }
@@ -13,8 +14,4 @@ class PokemonLoadStarted extends PokemonListEvent {
 
 class PokemonLoadMoreStarted extends PokemonListEvent {}
 
-class PokemonFetched extends PokemonListEvent {
-  final String pokemonId;
-
-  PokemonFetched({required this.pokemonId});
-}
+class PokemonFetched extends PokemonListEvent {}

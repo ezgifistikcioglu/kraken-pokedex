@@ -4,7 +4,7 @@ part 'api_service.chopper.dart';
 
 @ChopperApi()
 abstract class ApiService extends ChopperService {
-  @Get(path: '/posts')
+  @Get(path: '/pokemon')
   Future<Response> getPosts();
 
   @Get(path: '/posts/{post_id}')

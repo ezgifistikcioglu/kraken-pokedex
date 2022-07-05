@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kraken_pokedex/src/features/authentication/presentation/cubit/auth_bloc.dart';
+import 'package:kraken_pokedex/src/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:kraken_pokedex/src/features/authentication/presentation/login/home/home_view.dart';
 import 'package:kraken_pokedex/src/features/authentication/presentation/login/login_view.dart';
 
