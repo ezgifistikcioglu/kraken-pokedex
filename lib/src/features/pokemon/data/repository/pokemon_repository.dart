@@ -1,9 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:kraken_pokedex/src/features/pokemon/domain/models/pokemon_model.dart';
+import 'package:kraken_pokedex/src/features/pokemon/domain/models/pokemon.dart';
 import 'package:kraken_pokedex/src/features/pokemon/domain/models/pokemon_response.dart';
 
 abstract class IPokemonService {
@@ -52,7 +51,9 @@ class PokemonService extends IPokemonService {
         final _myDatas = response.data;
 
         if (_myDatas is List) {
-          return _myDatas.map((e) => PokemonModel.fromJson(e)).toList();
+          return _myDatas
+              .map((e) => PokemonModel.fromJson(e as Map<String, dynamic>))
+              .toList();
         }
       }
     } on DioError catch (exception) {

@@ -1,21 +1,22 @@
 import 'package:kraken_pokedex/src/features/pokemon/domain/entities/pokemon_ability_entity.dart';
 
 class Types {
-  int? slot;
-  Ability? type;
-
   Types({this.slot, this.type});
 
   Types.fromJson(Map<String, dynamic> json) {
-    slot = json['slot'];
-    type = json['type'] != null ? new Ability.fromJson(json['type']) : null;
+    slot = json['slot'] as int;
+    type = json['type'] != null
+        ? Ability.fromJson(json['type'] as Map<String, dynamic>)
+        : null;
   }
+  int? slot;
+  Ability? type;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['slot'] = this.slot;
-    if (this.type != null) {
-      data['type'] = this.type!.toJson();
+    final data = <String, dynamic>{};
+    data['slot'] = slot;
+    if (type != null) {
+      data['type'] = type!.toJson();
     }
     return data;
   }

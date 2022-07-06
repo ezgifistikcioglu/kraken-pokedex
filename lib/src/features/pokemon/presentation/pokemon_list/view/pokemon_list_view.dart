@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kraken_pokedex/src/core/constants/app_constants.dart';
 import 'package:kraken_pokedex/src/features/pokemon/data/service/api_service.dart';
-import 'package:kraken_pokedex/src/features/pokemon/domain/models/pokemon_model.dart';
+import 'package:kraken_pokedex/src/features/pokemon/domain/models/pokemon.dart';
 import 'package:kraken_pokedex/src/features/pokemon/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
 
 class PokemonListViewScreen extends StatefulWidget {
@@ -75,9 +75,8 @@ class _PokemonListViewScreenState extends State<PokemonListViewScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.network(state.pokemonList?[index].url ??
-                    'https://flutterawesome.com/assets/favicon.png'),
-                Text(state.pokemonList?[index].name ?? 'of')
+                //Image.network(state.pokemonList?[index].url),
+                Text(state.pokemonList?[index].toString() ?? '')
               ],
             ),
           ),

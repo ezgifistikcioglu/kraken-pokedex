@@ -1,18 +1,17 @@
 class Ability {
-  String? name;
-  String? url;
-
   Ability({this.name, this.url});
 
   Ability.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    url = json['url'];
+    name = json['name'] as String;
+    url = json['url'] as String;
   }
+  String? name;
+  String? url;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['url'] = this.url;
+    final data = <String, dynamic>{};
+    data['name'] = name;
+    data['url'] = url;
     return data;
   }
 }
