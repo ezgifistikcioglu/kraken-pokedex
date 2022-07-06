@@ -1,4 +1,4 @@
-import 'package:kraken_pokedex/src/features/pokemon/domain/models/pokemon.dart';
+import 'package:kraken_pokedex/src/features/pokemon/domain/models/pokemon_model.dart';
 
 extension ResultExtension on Results {
   String getId() {

@@ -1,15 +1,5 @@
 part of 'pokemon_list_bloc.dart';
 
-enum PokemonStateStatus {
-  initial,
-  loading,
-  loadSuccess,
-  loadFailure,
-  loadingMore,
-  loadMoreSuccess,
-  loadMoreFailure,
-}
-
 abstract class PokemonListState {}
 
 class PokemonInitialState extends PokemonListState {}

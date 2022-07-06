@@ -18,7 +18,7 @@ class PokemonDetailSuccess extends PokemonDetailState {
 }
 
 class PokemonDetailError extends PokemonDetailState {
-  final String mesage;
+  final String errorMesage;
 
-  PokemonDetailError(this.mesage);
+  PokemonDetailError(this.errorMesage);
 }

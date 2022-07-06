@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kraken_pokedex/src/features/pokemon/data/repository/pokemon_repository.dart';
 import 'package:kraken_pokedex/src/features/pokemon/data/service/project_dio.dart';
 
-import 'package:kraken_pokedex/src/features/pokemon/domain/models/pokemon.dart';
+import 'package:kraken_pokedex/src/features/pokemon/domain/models/pokemon_model.dart';
 
 part 'pokemon_list_event.dart';
 part 'pokemon_list_state.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ApplicationConstants {
+  static const String unknownText = 'Unknown';
   static const String loginText = 'Login';
   static const String signUpText = 'Sign-up';
   static const String signOutText = 'Sign Out';
@@ -9,6 +10,8 @@ class ApplicationConstants {
   static const String dashboardText = 'Welcome to Pokemon Dashboard';
   static const String welcomeTitle = 'Welcome';
   static const String pokemonPage = 'Go to Pokemon Page';
+  static const String pokemonLists = 'Pokemon Lists';
+  static const String pokemonDetails = 'Pokemon Details';
   static const String mailTitle = 'Mail';
   static const String emailHintTitle = 'E-Mail';
   static const String emailValidatorText = 'Please enter a valid email address';
@@ -19,6 +22,8 @@ class ApplicationConstants {
   // Padding
   static const EdgeInsets normalPadding = EdgeInsets.all(8);
   static const EdgeInsets normal2xPadding = EdgeInsets.all(18);
+  static const EdgeInsets symmetricPadding =
+      EdgeInsets.symmetric(horizontal: 16, vertical: 8);
 }
 
 // MediaQuery
@@ -30,6 +35,9 @@ double getMinWidth(BuildContext context) =>
 
 double getMaxHeight(BuildContext context) =>
     MediaQuery.of(context).size.width * 0.9;
+
+double getMinHeight(BuildContext context) =>
+    MediaQuery.of(context).size.width * 0.08;
 
 double getWidth(BuildContext context) => MediaQuery.of(context).size.width;
 double getHeight(BuildContext context) => MediaQuery.of(context).size.height;
