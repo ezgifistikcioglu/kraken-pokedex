@@ -1,9 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:kraken_pokedex/src/features/pokemon/domain/models/pokemon_detail_model.dart';
 import 'package:kraken_pokedex/src/features/pokemon/domain/models/pokemon.dart';
-import 'package:kraken_pokedex/src/features/pokemon/domain/models/pokemon_response.dart';
 
 abstract class IPokemonService {
   IPokemonService(this.dio);
@@ -31,12 +32,35 @@ class PokemonService extends IPokemonService {
     return null;
   }
 
-  Future<List<PokemonModel>?> fetchPokemonList() async {
-    final resp = await dio.get('/${_PokemonPaths.ability.name}');
+  Future<PokemonModel?> fetchPokemonList() async {
+    final resp =
+        await dio.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=50');
     final jsonBody = resp.data;
     if (resp.statusCode == HttpStatus.ok) {
       if (jsonBody is Map<String, dynamic>) {
-        return PokemonResponse.fromJson(jsonBody).data;
+        //List<dynamic> list = jsonBody["results"] as List;
+        //return list
+        //    .map((e) => PokemonModel.fromJson(e as Map<String, dynamic>))
+        //    .toList();
+        return PokemonModel.fromJson(jsonBody);
+      }
+    } else {
+      throw Exception('Failed to load pokemon list');
+    }
+    return null;
+  }
+
+  Future<PokemonDetailModel?> fetchDetailPokemon(String url) async {
+    final resp = await dio.get(url);
+    final jsonBody = resp.data;
+    if (resp.statusCode == HttpStatus.ok) {
+      if (jsonBody is Map<String, dynamic>) {
+        print(jsonEncode(jsonBody));
+        //List<dynamic> list = jsonBody["results"] as List;
+        //return list
+        //    .map((e) => PokemonModel.fromJson(e as Map<String, dynamic>))
+        //    .toList();
+        return PokemonDetailModel.fromJson(jsonBody);
       }
     } else {
       throw Exception('Failed to load pokemon list');
@@ -46,7 +70,7 @@ class PokemonService extends IPokemonService {
 
   Future<List<PokemonModel>?> fetchPostItemsAdvance() async {
     try {
-      final response = await dio.get('/${_PokemonPaths.ability.name}');
+      final response = await dio.get('/1');
       if (response.statusCode == HttpStatus.ok) {
         final _myDatas = response.data;
 

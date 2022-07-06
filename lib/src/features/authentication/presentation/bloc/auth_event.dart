@@ -5,8 +5,8 @@ abstract class AuthenticationEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class SignInRequested extends AuthenticationEvent {
-  SignInRequested(this.email, this.password);
+class LoginRequested extends AuthenticationEvent {
+  LoginRequested(this.email, this.password);
 
   final String email;
   final String password;
@@ -19,8 +19,8 @@ class SignUpRequested extends AuthenticationEvent {
   final String password;
 }
 
-class GoogleSignInRequested extends AuthenticationEvent {}
+class GoogleLoginRequested extends AuthenticationEvent {}
 
-class FacebookSignInRequested extends AuthenticationEvent {}
+class FacebookLoginRequested extends AuthenticationEvent {}
 
-class SignOutRequested extends AuthenticationEvent {}
+class LogOutRequested extends AuthenticationEvent {}

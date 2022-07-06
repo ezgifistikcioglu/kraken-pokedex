@@ -24,9 +24,7 @@ class MyApp extends StatelessWidget {
               if (snapshot.hasData) {
                 return const HomeView();
               }
-              return const PokemonListViewScreen(
-                title: "Pokemon",
-              );
+              return const PokemonListViewScreen();
             },
           ),
         ),

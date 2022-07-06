@@ -20,7 +20,7 @@ class AuthRepository {
     }
   }
 
-  Future<void> signIn({required String email, required String password}) async {
+  Future<void> logIn({required String email, required String password}) async {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
@@ -33,7 +33,7 @@ class AuthRepository {
     }
   }
 
-  Future<void> signOut() async {
+  Future<void> logOut() async {
     try {
       await _firebaseAuth.signOut();
     } catch (e) {
@@ -41,7 +41,7 @@ class AuthRepository {
     }
   }
 
-  Future<void> signInWithGoogle() async {
+  Future<void> loginWithGoogle() async {
     try {
       final googleUser = await GoogleSignIn().signIn();
 

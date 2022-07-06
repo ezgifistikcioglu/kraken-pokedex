@@ -18,20 +18,20 @@ abstract class LoginViewModel extends State<LoginView> {
   void authenticateWithEmailAndPassword(BuildContext context) {
     if (formKey.currentState!.validate()) {
       BlocProvider.of<AuthBloc>(context).add(
-        SignInRequested(controllerEmail.text, controllerPassword.text),
+        LoginRequested(controllerEmail.text, controllerPassword.text),
       );
     }
   }
 
   void authenticateWithGoogle(BuildContext context) {
     BlocProvider.of<AuthBloc>(context).add(
-      GoogleSignInRequested(),
+      GoogleLoginRequested(),
     );
   }
 
   void authenticateWithFacebook(BuildContext context) {
     BlocProvider.of<AuthBloc>(context).add(
-      FacebookSignInRequested(),
+      FacebookLoginRequested(),
     );
   }
 }

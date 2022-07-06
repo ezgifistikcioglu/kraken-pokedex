@@ -8,10 +8,10 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthBloc({required this.authRepository}) : super(UnAuthenticated()) {
-    on<SignInRequested>((event, emit) async {
+    on<LoginRequested>((event, emit) async {
       emit(Loading());
       try {
-        await authRepository.signIn(
+        await authRepository.logIn(
           email: event.email,
           password: event.password,
         );
@@ -36,10 +36,10 @@ class AuthBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
       }
     });
 
-    on<GoogleSignInRequested>((event, emit) async {
+    on<GoogleLoginRequested>((event, emit) async {
       emit(Loading());
       try {
-        await authRepository.signInWithGoogle();
+        await authRepository.loginWithGoogle();
         emit(Authenticated());
       } catch (e) {
         emit(AuthenticationError(e.toString()));
@@ -47,7 +47,7 @@ class AuthBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
       }
     });
 
-    on<FacebookSignInRequested>((event, emit) async {
+    on<FacebookLoginRequested>((event, emit) async {
       emit(Loading());
       try {
         await authRepository.loginWithFacebook();
@@ -58,9 +58,9 @@ class AuthBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
       }
     });
 
-    on<SignOutRequested>((event, emit) async {
+    on<LogOutRequested>((event, emit) async {
       emit(Loading());
-      await authRepository.signOut();
+      await authRepository.logOut();
       emit(UnAuthenticated());
     });
   }

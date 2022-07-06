@@ -92,7 +92,7 @@ class _LoginViewState extends LoginViewModel {
                               ),
                             );
                           },
-                          child: const Text(ApplicationConstants.signupText),
+                          child: const Text(ApplicationConstants.signUpText),
                         )
                       ],
                     ),

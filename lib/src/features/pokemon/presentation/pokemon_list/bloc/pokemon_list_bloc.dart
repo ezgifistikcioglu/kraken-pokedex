@@ -12,21 +12,12 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState>
     with ProjectDioMixin {
   PokemonListBloc() : super(PokemonInitialState()) {
     final _pokemonService = PokemonService(service);
-    //on<PokemonListEvent>((event, emit) async {
-    //  emit(PokemonLoadingState());
-    //  try {
-    //    final pokeList = await _pokemonService.fetchPokemonList();
-    //    emit(PokemonSuccessState(pokemonList: pokeList));
-    //  } on Exception catch (e) {
-    //    emit(PokemonErrorState(errorMessage: e.toString()));
-    //  }
-    //});
 
     on<PokemonListEvent>((event, emit) async {
       emit(PokemonLoadingState());
       try {
-        final pokeList = await _pokemonService.fetchPostItemsAdvance();
-        emit(PokemonSuccessState(pokemonList: pokeList));
+        final result = await _pokemonService.fetchPokemonList();
+        emit(PokemonSuccessState(resultList: result?.results));
       } on Exception catch (e) {
         emit(PokemonErrorState(errorMessage: e.toString()));
       }
