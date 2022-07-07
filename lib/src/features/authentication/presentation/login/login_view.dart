@@ -28,7 +28,9 @@ class _LoginViewState extends LoginViewModel {
           if (state is Authenticated) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const HomeView()),
+              MaterialPageRoute<dynamic>(
+                builder: (context) => const HomeView(),
+              ),
             );
           }
           if (state is AuthenticationError) {
@@ -87,7 +89,7 @@ class _LoginViewState extends LoginViewModel {
                           onPressed: () {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(
+                              MaterialPageRoute<dynamic>(
                                 builder: (context) => const SignUp(),
                               ),
                             );

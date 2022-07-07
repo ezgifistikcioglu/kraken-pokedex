@@ -47,7 +47,7 @@ class HomeView extends StatelessWidget {
             () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
+                MaterialPageRoute<dynamic>(
                   builder: (context) => const PokemonListViewScreen(),
                 ),
               );
@@ -55,9 +55,13 @@ class HomeView extends StatelessWidget {
             ApplicationConstants.pokemonPage,
           ),
           sizedBoxFive,
-          _goToPageElevatedButton(context, () {
-            context.read<AuthBloc>().add(LogOutRequested());
-          }, ApplicationConstants.signOutText),
+          _goToPageElevatedButton(
+            context,
+            () {
+              context.read<AuthBloc>().add(LogOutRequested());
+            },
+            ApplicationConstants.signOutText,
+          ),
         ],
       ),
     );
@@ -81,7 +85,7 @@ class HomeView extends StatelessWidget {
   void _userNotAuthenticated(AuthenticationState state, BuildContext context) {
     if (state is UnAuthenticated) {
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const LoginView()),
+        MaterialPageRoute<dynamic>(builder: (context) => const LoginView()),
         (route) => false,
       );
     }

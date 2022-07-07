@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kraken_pokedex/src/core/constants/app_constants.dart';
-import 'package:kraken_pokedex/src/core/extensions/result_extension.dart';
 import 'package:kraken_pokedex/src/features/authentication/presentation/login/login_view.dart';
 import 'package:kraken_pokedex/src/features/pokemon/presentation/pokemon_detail/view/pokemon_detail_page.dart';
 import 'package:kraken_pokedex/src/features/pokemon/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
@@ -26,7 +25,7 @@ class _PokemonListViewScreenState extends State<PokemonListViewScreen> {
           PokemonListBloc()..add(PokemonFetched()),
       child: Scaffold(
         appBar: AppBar(
-          actions: [_AppBarIcon(context)],
+          actions: [_appBarIcon(context)],
           title: const Text(ApplicationConstants.pokemonLists),
         ),
         body: _blocControls(),
@@ -34,15 +33,16 @@ class _PokemonListViewScreenState extends State<PokemonListViewScreen> {
     );
   }
 
-  IconButton _AppBarIcon(BuildContext context) {
+  Widget _appBarIcon(BuildContext context) {
     return IconButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const LoginView()),
-          );
-        },
-        icon: const Icon(Icons.home_outlined));
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute<dynamic>(builder: (context) => const LoginView()),
+        );
+      },
+      icon: const Icon(Icons.home_outlined),
+    );
   }
 
   BlocBuilder<PokemonListBloc, PokemonListState> _blocControls() {
@@ -95,7 +95,7 @@ class _PokemonListViewScreenState extends State<PokemonListViewScreen> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
+          MaterialPageRoute<dynamic>(
             builder: (context) => PokemonDetailPage(
               url: state.resultList![index].url!,
             ),
@@ -124,8 +124,10 @@ class _PokemonListViewScreenState extends State<PokemonListViewScreen> {
   }
 
   Widget _pokemonImage(PokemonSuccessState state, int index) {
+    final url = state.resultList![index].url;
+    final id = url!.split('/')[6];
     return Image.asset(
-      'assets/images/pokemon/${state.resultList![index].getId()}.png',
+      'assets/images/pokemon/$id.png',
     );
   }
 }

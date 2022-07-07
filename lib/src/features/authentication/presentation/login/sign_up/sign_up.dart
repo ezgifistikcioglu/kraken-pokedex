@@ -114,7 +114,7 @@ class _SignUpState extends State<SignUp> {
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(
+                            MaterialPageRoute<dynamic>(
                               builder: (context) => const LoginView(),
                             ),
                           );
@@ -155,7 +155,7 @@ class _SignUpState extends State<SignUp> {
   void _userAuthenticated(AuthenticationState state, BuildContext context) {
     if (state is Authenticated) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
+        MaterialPageRoute<dynamic>(
           builder: (context) => const HomeView(),
         ),
       );

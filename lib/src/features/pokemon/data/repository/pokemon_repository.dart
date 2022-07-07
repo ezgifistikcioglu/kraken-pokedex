@@ -13,15 +13,13 @@ abstract class IPokemonService {
   Future<PokemonDetailModel?> fetchDetailPokemon(String url);
 }
 
-enum _PokemonPaths { pokemon, ability, type }
+enum _PokemonPaths { pokemon }
 
 class PokemonService extends IPokemonService {
   PokemonService(super.dio);
 
   Future<PokemonModel?> fetchPokemonData() async {
-    final response = await dio.get(
-      '/${_PokemonPaths.pokemon.name}',
-    );
+    final response = await dio.get('/${_PokemonPaths.pokemon.name}');
     if (response.statusCode == HttpStatus.ok) {
       final jsonBody = response.data;
       if (jsonBody is Map<String, dynamic>) {

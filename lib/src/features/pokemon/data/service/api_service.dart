@@ -5,6 +5,7 @@ part 'api_service.chopper.dart';
 @ChopperApi()
 abstract class ApiService extends ChopperService {
   @Get(path: '/pokemon')
+  // ignore: strict_raw_type
   Future<Response> getPosts();
 
   static ApiService create() {
