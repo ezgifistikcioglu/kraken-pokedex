@@ -7,9 +7,8 @@ abstract class PokemonListEvent extends Equatable {
 }
 
 class PokemonLoadStarted extends PokemonListEvent {
+  const PokemonLoadStarted({this.loadAll = false});
   final bool loadAll;
-
-  PokemonLoadStarted({this.loadAll = false});
 }
 
 class PokemonLoadMoreStarted extends PokemonListEvent {}

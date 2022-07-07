@@ -17,8 +17,8 @@ class PokemonDetailBloc extends Bloc<PokemonDetailEvent, PokemonDetailState>
       try {
         final result = await _pokemonService.fetchDetailPokemon(event.url);
         add(DisplayDetails(result!));
-      } on Exception catch (e) {
-        emit(PokemonDetailError("Error mesage"));
+      } on Exception {
+        emit(const PokemonDetailError('Error mesage'));
       }
     });
 

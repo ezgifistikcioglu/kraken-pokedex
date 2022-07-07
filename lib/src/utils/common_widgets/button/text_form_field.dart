@@ -30,8 +30,9 @@ class CustomPasswordTextField extends StatefulWidget {
   final Function(String)? onChanged;
 
   @override
-  _CustomPasswordTextFiedlState createState() =>
-      _CustomPasswordTextFiedlState();
+  _CustomPasswordTextFiedlState createState() {
+    return _CustomPasswordTextFiedlState();
+  }
 }
 
 class _CustomPasswordTextFiedlState extends State<CustomPasswordTextField> {

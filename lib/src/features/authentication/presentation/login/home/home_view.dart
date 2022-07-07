@@ -31,7 +31,7 @@ class HomeView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            '${user.email ?? ''}',
+            user.email ?? '',
             style: const TextStyle(fontSize: 15),
             textAlign: TextAlign.center,
           ),
@@ -42,12 +42,18 @@ class HomeView extends StatelessWidget {
             sizedBoxFive,
           if (user.displayName != null) Text('${user.displayName}'),
           sizedBoxFifteen,
-          _goToPageElevatedButton(context, () {
-            Navigator.push(
+          _goToPageElevatedButton(
+            context,
+            () {
+              Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => PokemonListViewScreen()));
-          }, ApplicationConstants.pokemonPage),
+                  builder: (context) => const PokemonListViewScreen(),
+                ),
+              );
+            },
+            ApplicationConstants.pokemonPage,
+          ),
           sizedBoxFive,
           _goToPageElevatedButton(context, () {
             context.read<AuthBloc>().add(LogOutRequested());
@@ -60,15 +66,16 @@ class HomeView extends StatelessWidget {
   Widget _goToPageElevatedButton(
       BuildContext context, VoidCallback? onPressed, String data) {
     return ElevatedButton(
-        onPressed: onPressed,
-        style: ButtonStyle(
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(2),
-            ),
+      onPressed: onPressed,
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(2),
           ),
         ),
-        child: Text(data));
+      ),
+      child: Text(data),
+    );
   }
 
   void _userNotAuthenticated(AuthenticationState state, BuildContext context) {

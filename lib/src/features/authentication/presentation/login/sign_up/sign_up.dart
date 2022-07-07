@@ -51,7 +51,7 @@ class _SignUpState extends State<SignUp> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        "Sign Up",
+                        'Sign Up',
                         style: TextStyle(
                           fontSize: 38,
                           fontWeight: FontWeight.bold,
@@ -66,7 +66,7 @@ class _SignUpState extends State<SignUp> {
                               TextFormField(
                                 controller: _emailController,
                                 decoration: const InputDecoration(
-                                  hintText: "Email",
+                                  hintText: 'Email',
                                   border: OutlineInputBorder(),
                                 ),
                                 autovalidateMode:
@@ -89,7 +89,7 @@ class _SignUpState extends State<SignUp> {
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
                                   return value != null && value.length < 6
-                                      ? "Enter min. 6 characters"
+                                      ? 'Enter min. 6 characters'
                                       : null;
                                 },
                               ),
@@ -109,24 +109,25 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                       ),
-                      const Text("Already have an account?"),
+                      const Text('Already have an account?'),
                       OutlinedButton(
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const LoginView()),
+                              builder: (context) => const LoginView(),
+                            ),
                           );
                         },
-                        child: const Text("Sign In"),
+                        child: const Text('Sign In'),
                       ),
-                      const Text("Or"),
+                      const Text('Or'),
                       IconButton(
                         onPressed: () {
                           _authenticateWithGoogle(context);
                         },
                         icon: Image.network(
-                          "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png",
+                          'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png',
                           height: 30,
                           width: 30,
                         ),

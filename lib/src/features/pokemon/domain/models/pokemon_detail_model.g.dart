@@ -33,23 +33,6 @@ PokemonDetailModel _$PokemonDetailModelFromJson(Map<String, dynamic> json) =>
       weight: json['weight'] as int?,
     );
 
-Map<String, dynamic> _$PokemonDetailModelToJson(PokemonDetailModel instance) =>
-    <String, dynamic>{
-      'abilities': instance.abilities,
-      'baseExperience': instance.baseExperience,
-      'height': instance.height,
-      'id': instance.id,
-      'isDefault': instance.isDefault,
-      'locationAreaEncounters': instance.locationAreaEncounters,
-      'moves': instance.moves,
-      'name': instance.name,
-      'order': instance.order,
-      'species': instance.species,
-      'stats': instance.stats,
-      'types': instance.types,
-      'weight': instance.weight,
-    };
-
 Abilities _$AbilitiesFromJson(Map<String, dynamic> json) => Abilities(
       ability: json['ability'] == null
           ? null
@@ -58,31 +41,16 @@ Abilities _$AbilitiesFromJson(Map<String, dynamic> json) => Abilities(
       slot: json['slot'] as int?,
     );
 
-Map<String, dynamic> _$AbilitiesToJson(Abilities instance) => <String, dynamic>{
-      'ability': instance.ability,
-      'isHidden': instance.isHidden,
-      'slot': instance.slot,
-    };
-
 Ability _$AbilityFromJson(Map<String, dynamic> json) => Ability(
       name: json['name'] as String?,
       url: json['url'] as String?,
     );
-
-Map<String, dynamic> _$AbilityToJson(Ability instance) => <String, dynamic>{
-      'name': instance.name,
-      'url': instance.url,
-    };
 
 Moves _$MovesFromJson(Map<String, dynamic> json) => Moves(
       move: json['move'] == null
           ? null
           : Ability.fromJson(json['move'] as Map<String, dynamic>),
     );
-
-Map<String, dynamic> _$MovesToJson(Moves instance) => <String, dynamic>{
-      'move': instance.move,
-    };
 
 Stats _$StatsFromJson(Map<String, dynamic> json) => Stats(
       baseStat: json['baseStat'] as int?,
@@ -92,20 +60,9 @@ Stats _$StatsFromJson(Map<String, dynamic> json) => Stats(
           : Ability.fromJson(json['stat'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$StatsToJson(Stats instance) => <String, dynamic>{
-      'baseStat': instance.baseStat,
-      'effort': instance.effort,
-      'stat': instance.stat,
-    };
-
 Types _$TypesFromJson(Map<String, dynamic> json) => Types(
       slot: json['slot'] as int?,
       type: json['type'] == null
           ? null
           : Ability.fromJson(json['type'] as Map<String, dynamic>),
     );
-
-Map<String, dynamic> _$TypesToJson(Types instance) => <String, dynamic>{
-      'slot': instance.slot,
-      'type': instance.type,
-    };

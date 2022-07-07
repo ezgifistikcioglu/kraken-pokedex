@@ -12,13 +12,13 @@ class PokemonDetailBlocInitial extends PokemonDetailState {}
 class PokemonDetailLoading extends PokemonDetailState {}
 
 class PokemonDetailSuccess extends PokemonDetailState {
-  final PokemonDetailModel model;
 
-  PokemonDetailSuccess(this.model);
+  const PokemonDetailSuccess(this.model);
+  final PokemonDetailModel model;
 }
 
 class PokemonDetailError extends PokemonDetailState {
-  final String errorMesage;
 
-  PokemonDetailError(this.errorMesage);
+  const PokemonDetailError(this.errorMesage);
+  final String errorMesage;
 }

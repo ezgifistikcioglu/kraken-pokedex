@@ -14,19 +14,7 @@ PokemonModel _$PokemonModelFromJson(Map<String, dynamic> json) => PokemonModel(
           .toList(),
     );
 
-Map<String, dynamic> _$PokemonModelToJson(PokemonModel instance) =>
-    <String, dynamic>{
-      'count': instance.count,
-      'next': instance.next,
-      'results': instance.results,
-    };
-
 Results _$ResultsFromJson(Map<String, dynamic> json) => Results(
       name: json['name'] as String?,
       url: json['url'] as String?,
     );
-
-Map<String, dynamic> _$ResultsToJson(Results instance) => <String, dynamic>{
-      'name': instance.name,
-      'url': instance.url,
-    };

@@ -8,13 +8,11 @@ abstract class PokemonDetailEvent extends Equatable {
 }
 
 class FetchDetails extends PokemonDetailEvent {
+  const FetchDetails(this.url);
   final String url;
-
-  FetchDetails(this.url);
 }
 
 class DisplayDetails extends PokemonDetailEvent {
+  const DisplayDetails(this.pokemonDetailModel);
   final PokemonDetailModel pokemonDetailModel;
-
-  DisplayDetails(this.pokemonDetailModel);
 }

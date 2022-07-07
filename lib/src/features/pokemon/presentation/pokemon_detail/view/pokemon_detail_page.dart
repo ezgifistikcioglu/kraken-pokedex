@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kraken_pokedex/src/core/constants/app_constants.dart';
-import 'package:kraken_pokedex/src/features/pokemon/domain/models/pokemon_detail_model.dart';
 import 'package:kraken_pokedex/src/features/pokemon/presentation/pokemon_detail/bloc/pokemon_detail_bloc.dart';
 
 class PokemonDetailPage extends StatefulWidget {
-  const PokemonDetailPage({Key? key, required this.url}) : super(key: key);
+  const PokemonDetailPage({super.key, required this.url});
   final String url;
   @override
   State<PokemonDetailPage> createState() => _PokemonDetailPageState();
@@ -24,7 +23,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
           child: BlocBuilder<PokemonDetailBloc, PokemonDetailState>(
             builder: (context, state) {
               if (state is PokemonDetailLoading) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
@@ -39,70 +38,41 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
                 return SingleChildScrollView(
                   child: Column(
                     children: [
-                      sizedBoxFifteen,
                       _pokemonImageSizedBox(context, state),
                       sizedBoxFifteen,
-                      state.model.name == null
-                          ? Text(ApplicationConstants.unknownText)
-                          : _pokemonName(state, context),
+                      if (state.model.name == null)
+                        const Text(ApplicationConstants.unknownText)
+                      else
+                        _pokemonName(state, context),
                       sizedBoxFifteen,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: state.model.types != null
-                            ? state.model.types!
-                                .map(
-                                  (type) => _typesCardPadding(context, type),
-                                )
-                                .toList()
-                            : [],
+                      _singleChildScrool(
+                        state,
+                        context,
+                        _pokemonTypes(state, context),
                       ),
                       sizedBoxFifteen,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: state.model.abilities != null
-                            ? state.model.abilities!
-                                .map(
-                                  (ability) =>
-                                      _abilitiesCardPadding(context, ability),
-                                )
-                                .toList()
-                            : [],
+                      _singleChildScrool(
+                        state,
+                        context,
+                        _pokemonAbilities(state, context),
                       ),
                       sizedBoxFifteen,
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: state.model.stats != null
-                              ? state.model.stats!
-                                  .map(
-                                    (stats) =>
-                                        _statsCardPadding(context, stats),
-                                  )
-                                  .toList()
-                              : [],
-                        ),
+                      _singleChildScrool(
+                        state,
+                        context,
+                        _pokemonStats(state, context),
                       ),
-                      sizedBoxFifteen,
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: state.model.moves != null
-                              ? state.model.moves!
-                                  .map(
-                                    (moves) =>
-                                        _movesCardPadding(context, moves),
-                                  )
-                                  .toList()
-                              : [],
-                        ),
+                      sizedBoxFive,
+                      _singleChildScrool(
+                        state,
+                        context,
+                        _pokemonMoves(state, context),
                       ),
                     ],
                   ),
                 );
               } else {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
             },
           ),
@@ -111,77 +81,97 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
     );
   }
 
-  Padding _statsCardPadding(BuildContext context, Stats stats) {
-    return Padding(
-      padding: ApplicationConstants.normal2xPadding,
-      child: Card(
-        color: Colors.purple,
-        elevation: getMinHeight(context) / 2,
-        child: Padding(
-            padding: ApplicationConstants.symmetricPadding,
-            child: Text(
-              stats.stat!.name!,
-              style: TextStyle(
-                fontSize: getMinWidth(context),
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            )),
-      ),
+  Widget _pokemonMoves(PokemonDetailSuccess state, BuildContext context) {
+    return Row(
+      children: state.model.moves != null
+          ? state.model.moves!
+              .map(
+                (moves) => _dynamicCardPadding(
+                  context,
+                  moves.move!.name!,
+                  Colors.green,
+                  ApplicationConstants.normalPadding,
+                ),
+              )
+              .toList()
+          : [],
     );
   }
 
-  Padding _typesCardPadding(BuildContext context, Types type) {
-    return Padding(
-      padding: ApplicationConstants.normal2xPadding,
-      child: Card(
-        color: Colors.amber,
-        elevation: getMinHeight(context) / 2,
-        child: Padding(
-            padding: ApplicationConstants.symmetricPadding,
-            child: Text(
-              type.type!.name!,
-              style: TextStyle(
-                fontSize: getMinWidth(context),
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            )),
-      ),
+  Widget _pokemonStats(PokemonDetailSuccess state, BuildContext context) {
+    return Row(
+      children: state.model.stats != null
+          ? state.model.stats!
+              .map(
+                (stats) => _dynamicCardPadding(
+                  context,
+                  stats.stat!.name!,
+                  Colors.purple,
+                  ApplicationConstants.symmetricPadding,
+                ),
+              )
+              .toList()
+          : [],
     );
   }
 
-  Padding _abilitiesCardPadding(BuildContext context, Abilities abilities) {
-    return Padding(
-        padding: ApplicationConstants.normal2xPadding,
-        child: Card(
-          color: Colors.redAccent,
-          elevation: getMinHeight(context) / 2,
-          child: Padding(
-            padding: ApplicationConstants.symmetricPadding,
-            child: Text(
-              abilities.ability!.name!,
-              style: TextStyle(
-                fontSize: getMinWidth(context),
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ));
+  Widget _pokemonAbilities(PokemonDetailSuccess state, BuildContext context) {
+    return Row(
+      children: state.model.abilities != null
+          ? state.model.abilities!
+              .map(
+                (abilities) => _dynamicCardPadding(
+                  context,
+                  abilities.ability!.name!,
+                  Colors.redAccent,
+                  ApplicationConstants.symmetricPadding,
+                ),
+              )
+              .toList()
+          : [],
+    );
   }
 
-  Widget _movesCardPadding(BuildContext context, Moves moves) {
+  Widget _singleChildScrool(
+      PokemonDetailSuccess state, BuildContext context, Widget widget) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: widget,
+    );
+  }
+
+  Widget _pokemonTypes(PokemonDetailSuccess state, BuildContext context) {
+    return Row(
+      children: state.model.types != null
+          ? state.model.types!
+              .map(
+                (types) => _dynamicCardPadding(
+                  context,
+                  types.type!.name!,
+                  Colors.amber,
+                  ApplicationConstants.symmetricPadding,
+                ),
+              )
+              .toList()
+          : [],
+    );
+  }
+
+  Padding _dynamicCardPadding(BuildContext context, String details, Color color,
+      EdgeInsetsGeometry padding) {
     return Padding(
       padding: ApplicationConstants.normal2xPadding,
       child: Card(
+        color: color,
+        elevation: getMinHeight(context) / 2,
         child: Padding(
-          padding: ApplicationConstants.symmetricPadding,
+          padding: padding,
           child: Text(
-            moves.move!.name!,
+            details,
             style: TextStyle(
+              fontSize: getMinWidth(context),
               fontWeight: FontWeight.bold,
-              color: Colors.green,
+              color: Colors.white,
             ),
           ),
         ),
@@ -190,8 +180,10 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
   }
 
   Text _pokemonName(PokemonDetailSuccess state, BuildContext context) {
-    return Text(state.model.name!,
-        style: TextStyle(fontSize: getMinHeight(context)));
+    return Text(
+      state.model.name!,
+      style: TextStyle(fontSize: getMinHeight(context)),
+    );
   }
 
   SizedBox _pokemonImageSizedBox(
@@ -204,9 +196,9 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
 
   AppBar _appBar(BuildContext context) {
     return AppBar(
-      title: Text(ApplicationConstants.pokemonDetails),
+      title: const Text(ApplicationConstants.pokemonDetails),
       leading: InkResponse(
-        child: Icon(Icons.arrow_back),
+        child: const Icon(Icons.arrow_back),
         onTap: () => Navigator.of(context).pop(),
       ),
     );
