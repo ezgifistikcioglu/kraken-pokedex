@@ -19,6 +19,8 @@ dependencies:
   equatable: ^2.0.3
 
   # authentication
+  firebase_core_platform_interface: 4.5.1
+  firebase_messaging: ^13.0.4 
   firebase_core: ^1.19.1
   firebase_auth: ^3.4.1
   google_sign_in: ^5.3.3
