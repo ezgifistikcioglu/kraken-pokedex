@@ -99,10 +99,16 @@ class _SignUpState extends State<SignUp> {
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.7,
                                 child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: lightPurple,
+                                    padding: const EdgeInsets.all(8),
+                                  ),
                                   onPressed: () {
                                     _createAccountWithEmailAndPassword(context);
                                   },
-                                  child: const Text('Sign Up'),
+                                  child: const Text(
+                                    'Sign Up',
+                                  ),
                                 ),
                               )
                             ],
@@ -119,7 +125,10 @@ class _SignUpState extends State<SignUp> {
                             ),
                           );
                         },
-                        child: const Text('Sign In'),
+                        child: Text(
+                          'Sign In',
+                          style: TextStyle(color: lightPurple),
+                        ),
                       ),
                       const Text('Or'),
                       IconButton(
@@ -145,7 +154,9 @@ class _SignUpState extends State<SignUp> {
   }
 
   void _userAuthenticationError(
-      AuthenticationState state, BuildContext context) {
+    AuthenticationState state,
+    BuildContext context,
+  ) {
     if (state is AuthenticationError) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(state.error)));

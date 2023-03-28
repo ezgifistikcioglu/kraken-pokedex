@@ -68,7 +68,10 @@ class HomeView extends StatelessWidget {
   }
 
   Widget _goToPageElevatedButton(
-      BuildContext context, VoidCallback? onPressed, String data) {
+    BuildContext context,
+    VoidCallback? onPressed,
+    String data,
+  ) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ButtonStyle(

@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kraken_pokedex/src/core/constants/app_constants.dart';
 import 'package:kraken_pokedex/src/features/authentication/data/repository/auth_repository.dart';
 import 'package:kraken_pokedex/src/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:kraken_pokedex/src/features/authentication/presentation/login/home/home_view.dart';
@@ -18,6 +20,17 @@ class MyApp extends StatelessWidget {
           authRepository: RepositoryProvider.of<AuthRepository>(context),
         ),
         child: MaterialApp(
+          theme: ThemeData(
+            appBarTheme: AppBarTheme(
+              backgroundColor: normalPurple,
+              systemOverlayStyle: SystemUiOverlayStyle.light,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.elliptical(200, 20),
+                ),
+              ),
+            ),
+          ),
           home: StreamBuilder<User?>(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {

@@ -53,7 +53,7 @@ class _LoginViewState extends LoginViewModel {
                     reverse: true,
                     child: Column(
                       children: [
-                        _welcomePokedexText(context),
+                        _welcomeText(context),
                         sizedBoxFifteen,
                         Center(
                           child: Form(
@@ -94,7 +94,12 @@ class _LoginViewState extends LoginViewModel {
                               ),
                             );
                           },
-                          child: const Text(ApplicationConstants.signUpText),
+                          child: Text(
+                            ApplicationConstants.signUpText,
+                            style: TextStyle(
+                              color: lightPurple,
+                            ),
+                          ),
                         )
                       ],
                     ),
@@ -113,6 +118,10 @@ class _LoginViewState extends LoginViewModel {
     return SizedBox(
       width: getMaxWidth(context),
       child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: lightPurple,
+          padding: const EdgeInsets.all(8),
+        ),
         onPressed: () {
           authenticateWithEmailAndPassword(context);
         },
@@ -148,10 +157,11 @@ class _LoginViewState extends LoginViewModel {
     );
   }
 
-  Text _welcomePokedexText(BuildContext context) {
+  Text _welcomeText(BuildContext context) {
     return Text(
       ApplicationConstants.welcomeText,
       style: TextStyle(
+        color: lightPurple,
         fontSize: getMinWidth(context),
         fontWeight: FontWeight.bold,
       ),

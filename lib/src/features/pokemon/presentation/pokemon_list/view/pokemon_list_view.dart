@@ -90,7 +90,10 @@ class _PokemonListViewScreenState extends State<PokemonListViewScreen> {
   }
 
   GestureDetector _goToDetailPokemon(
-      BuildContext context, PokemonSuccessState state, int index) {
+    BuildContext context,
+    PokemonSuccessState state,
+    int index,
+  ) {
     return GestureDetector(
       onTap: () {
         Navigator.push(

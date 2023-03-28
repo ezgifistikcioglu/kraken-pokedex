@@ -133,7 +133,10 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
   }
 
   Widget _singleChildScrool(
-      PokemonDetailSuccess state, BuildContext context, Widget widget) {
+    PokemonDetailSuccess state,
+    BuildContext context,
+    Widget widget,
+  ) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: widget,
@@ -157,8 +160,12 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
     );
   }
 
-  Padding _dynamicCardPadding(BuildContext context, String details, Color color,
-      EdgeInsetsGeometry padding) {
+  Padding _dynamicCardPadding(
+    BuildContext context,
+    String details,
+    Color color,
+    EdgeInsetsGeometry padding,
+  ) {
     return Padding(
       padding: ApplicationConstants.normal2xPadding,
       child: Card(
@@ -187,7 +194,9 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
   }
 
   SizedBox _pokemonImageSizedBox(
-      BuildContext context, PokemonDetailSuccess state) {
+    BuildContext context,
+    PokemonDetailSuccess state,
+  ) {
     return SizedBox(
       height: getMaxWidth(context),
       child: _pokemonImage(state),
